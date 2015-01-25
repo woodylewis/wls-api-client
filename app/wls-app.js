@@ -19,20 +19,20 @@ angular.module('wlsApp', [
 				"state" : { templateUrl: "partials/main_state.html",}
 			}
 		})
-		.state('route1', {
-			url: "/route1",
+		.state('list', {
+			url: "/list",
 			views: {
 				"state" : { templateUrl: "partials/stocklist.html",}
 			}
 		})
-		.state('route2', {
-			url: "/route2",
+		.state('stock', {
+			url: "/stock",
 			views: {
 				"state" : { templateUrl: "partials/stock.html", }
 			}
 		})
 }])
-.controller('MainCtrl', function($scope, $window, apiService) {
+.controller('MainCtrl', function($scope, $window, $state, apiService) {
 	$scope.mainVar = 'HERE';
     var handleSuccess = function(data, status) {
     $scope.stocks = data;
@@ -42,7 +42,9 @@ angular.module('wlsApp', [
           .success(handleSuccess);
 
     var handleStockSuccess = function(data, status) {
-    console.log('STOCK', data);
+    	$scope.currentStock = data;
+    	var stockPage = 'stock';
+    	$state.go(stockPage);
   };
     $scope.showCurrentStock = function(_id) {
     $scope.currentStock = apiService.fetchCurrentStock(_id)
