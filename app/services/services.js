@@ -19,6 +19,15 @@ angular.module('wlsApp.services', [])
 		});
 	}
 
+	var insertStock = function(name) {
+		return $http ({
+			method: 'POST',
+			url: stockListUrl + '/',
+			data: "name=" + name,
+			headers: {'Content-Type':'application/x-www-form-urlencoded'}
+		});
+	}
+
 	//--- RETURN THE SERVICE OBJECT WITH METHODS -----
 	return {
 		fetchStocks: function() {
@@ -26,6 +35,9 @@ angular.module('wlsApp.services', [])
 		},
 		fetchCurrentStock: function(_id) {
 			return fetchCurrentStock(_id);
+		},
+		insertStock: function(name) {
+			return insertStock(name);
 		}
 	};
 });
