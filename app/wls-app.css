@@ -1,0 +1,31 @@
+/* app css stylesheet */
+
+.nav, .wls-stock-container, .panel-title a { cursor: pointer; }
+
+body {
+    text-align: center;
+    color: #000;
+    padding: 5em;
+}
+
+.wls-copy {
+    margin:0 auto;
+    text-align: center;
+    border:1px solid gray;
+    padding:1em;
+    width:50%;
+}
+
+#wls-button-panel {
+	margin:2em;
+}
+
+.wls-stock-container {
+	margin:1em;
+	text-align: center;
+}
+
+#wls-stock-list {
+	margin-top:1em;
+    /*border:1px solid gray;*/
+}
