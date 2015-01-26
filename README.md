@@ -10,6 +10,9 @@ To do: build out services and conditional logic.
 bower install angular-bootstrap
 ```
 ```
+bower install angular-ui-router
+```
+```
 npm install
 ```
 ```
