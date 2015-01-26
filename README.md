@@ -1,7 +1,5 @@
 #wls-api-client
 
-Based on https://github.com/woodylewis/wls-app
-
 Basic CRUD operations from AngularJS client to Node-Express-MongoDB server
 
 ```
@@ -16,5 +14,3 @@ npm install
 ```
 npm start
 ```
-
-Now browse to the app at `http://localhost:8000/app/index.html`.
