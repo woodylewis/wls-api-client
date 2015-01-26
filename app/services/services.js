@@ -28,6 +28,13 @@ angular.module('wlsApp.services', [])
 		});
 	}
 
+	var deleteStock = function(_id) {
+		return $http ({
+			method: 'DELETE',
+			url: stockListUrl + '/' + _id
+		});
+	}
+
 	//--- RETURN THE SERVICE OBJECT WITH METHODS -----
 	return {
 		fetchStocks: function() {
@@ -38,6 +45,10 @@ angular.module('wlsApp.services', [])
 		},
 		insertStock: function(name) {
 			return insertStock(name);
+		},
+		
+		deleteStock: function(_id) {
+			return deleteStock(_id);
 		}
 	};
 });

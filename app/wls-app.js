@@ -40,32 +40,50 @@ angular.module('wlsApp', [
 }])
 .controller('MainCtrl', function($scope, $window, $state, apiService) {
 	$scope.mainVar = 'HERE';
-    var handleSuccess = function(data, status) {
+
+	//----------------- STOCK LIST ----------------------
+    var handleStockListSuccess = function(data, status) {
     $scope.stocks = data;
     console.log('STOCKS', $scope.stocks);
   };
 	$scope.stocks  = apiService.fetchStocks()
-          .success(handleSuccess);
+          .success(handleStockListSuccess);
 
-    var handleStockSuccess = function(data, status) {
+    var handleShowStockSuccess = function(data, status) {
     	$scope.currentStock = data;
     	var stockPage = 'stock';
     	$state.go(stockPage);
   };
+
+	//----------------- SHOW STOCK  ----------------------
     $scope.showCurrentStock = function(_id) {
     $scope.currentStock = apiService.fetchCurrentStock(_id)
-    .success(handleStockSuccess);
-  };
+    .success(handleShowStockSuccess);
+  	};
 
   	var handleInsertStockSuccess = function(data, status) {
   		console.log('STATUS', status);
   		$scope.stocks = apiService.fetchStocks()
-          .success(handleSuccess);
+          .success(handleStockListSuccess);
     	$state.go('list');
   	};
 
+	//----------------- ADD STOCK  ----------------------
   	$scope.insertStock = function(name) {
     apiService.insertStock(name)
     .success(handleInsertStockSuccess);
-  }; 
+  	}; 
+
+	//----------------- SHOW STOCK  ----------------------
+  	var handleDeleteStockSuccess = function(data, status) {
+  		console.log('STATUS', status);
+  		$scope.stocks = apiService.fetchStocks()
+          .success(handleStockListSuccess);
+    	$state.go('list');
+  	};
+
+  	$scope.deleteStock = function(_id) {
+    	apiService.deleteStock(_id)
+    	  .success(handleDeleteStockSuccess);
+  	};
 });
