@@ -1,4 +1,4 @@
-#wls-state
+#wls-api-client
 
 Based on https://github.com/woodylewis/wls-app
 
