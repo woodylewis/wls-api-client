@@ -2,9 +2,7 @@
 
 Based on https://github.com/woodylewis/wls-app
 
-Stub of an app that shows templates for three states
-
-To do: build out services and conditional logic.
+Basic CRUD operations from AngularJS client to Node-Express-MongoDB server
 
 ```
 bower install angular-bootstrap
