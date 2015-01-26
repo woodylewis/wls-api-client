@@ -35,6 +35,17 @@ angular.module('wlsApp.services', [])
 		});
 	}
 
+	var editStock = function(_id, name) {
+		console.log('EDIT ID', _id);
+		console.log('EDIT NAME', name);
+		return $http ({
+			method: 'PUT',
+			url: stockListUrl + '/' + _id,
+			data: "name=" + name,
+			headers: {'Content-Type':'application/x-www-form-urlencoded'}
+		});
+	}
+
 	//--- RETURN THE SERVICE OBJECT WITH METHODS -----
 	return {
 		fetchStocks: function() {
@@ -46,9 +57,11 @@ angular.module('wlsApp.services', [])
 		insertStock: function(name) {
 			return insertStock(name);
 		},
-		
 		deleteStock: function(_id) {
 			return deleteStock(_id);
+		},
+		editStock: function(_id, name) {
+			return editStock(_id, name);
 		}
 	};
 });

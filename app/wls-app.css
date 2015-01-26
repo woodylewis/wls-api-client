@@ -10,14 +10,26 @@ body {
 
 .wls-copy {
     margin:0 auto;
-    text-align: center;
+    text-align: left;
     border:1px solid gray;
     padding:1em;
     width:50%;
 }
 
 #wls-button-panel {
-	margin:2em;
+    margin:2em;
+}
+
+#wls-button-panel-secondary {
+    margin: 0 auto;
+    width:50%;
+    text-align: center;
+}
+
+.wls-button {
+    display: inline-block;
+    position:relative;
+    margin:.2em;
 }
 
 .wls-stock-container {

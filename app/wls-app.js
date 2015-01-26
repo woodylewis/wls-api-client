@@ -37,6 +37,12 @@ angular.module('wlsApp', [
 				"state" : { templateUrl: "partials/add_stock.html", }
 			}
 		})
+		.state('edit', {
+			url: "/edit",
+			views: {
+				"state" : { templateUrl: "partials/edit_stock.html", }
+			}
+		})
 }])
 .controller('MainCtrl', function($scope, $window, $state, apiService) {
 	$scope.mainVar = 'HERE';
@@ -74,7 +80,7 @@ angular.module('wlsApp', [
     .success(handleInsertStockSuccess);
   	}; 
 
-	//----------------- SHOW STOCK  ----------------------
+	//----------------- DELETE STOCK  ----------------------
   	var handleDeleteStockSuccess = function(data, status) {
   		console.log('STATUS', status);
   		$scope.stocks = apiService.fetchStocks()
@@ -86,4 +92,19 @@ angular.module('wlsApp', [
     	apiService.deleteStock(_id)
     	  .success(handleDeleteStockSuccess);
   	};
-});
+
+
+	//----------------- EDIT STOCK  ----------------------
+	var handleEditStockSuccess = function(data, status) {
+  		console.log('STATUS', status);
+  		console.log('DATA', data);
+  		$scope.stocks = apiService.fetchStocks()
+          .success(handleStockListSuccess);
+    	$state.go('list');
+  	};
+
+	$scope.editStock = function(_id, name) {
+    	apiService.editStock(_id, name)
+    	  .success(handleEditStockSuccess);
+  	};
+}); 
