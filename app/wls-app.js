@@ -75,8 +75,8 @@ angular.module('wlsApp', [
   	};
 
 	//----------------- ADD STOCK  ----------------------
-  	$scope.insertStock = function(name) {
-    apiService.insertStock(name)
+  	$scope.insertStock = function(stock) {
+    apiService.insertStock(stock)
     .success(handleInsertStockSuccess);
   	}; 
 
@@ -103,8 +103,8 @@ angular.module('wlsApp', [
     	$state.go('list');
   	};
 
-	$scope.editStock = function(_id, name) {
-    	apiService.editStock(_id, name)
+	$scope.editStock = function(_id, stock) {
+    	apiService.editStock(_id, stock)
     	  .success(handleEditStockSuccess);
   	};
 }); 

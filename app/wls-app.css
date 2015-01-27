@@ -37,7 +37,10 @@ body {
 	text-align: center;
 }
 
-#wls-stock-list {
-	margin-top:1em;
-    /*border:1px solid gray;*/
+.wls-stock-box {
+    margin:0 auto;
+    text-align: left;
+    border:1px solid gray;
+    padding:1em;
+    width:50%;
 }

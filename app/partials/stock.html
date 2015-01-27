@@ -1,9 +1,13 @@
-
-<b>Stock Name</b>: {{currentStock.name}}
-<p>
-<b>Mongo ID</b>: {{currentStock._id}}
-<p>
-<div id="wls-button-panel-secondary">
-<a ui-sref="edit"><div class="wls-button"><button type="button" class="btn btn-primary">Edit</button></div></a>
-<div class="wls-button" ng-click="deleteStock(currentStock._id)"><button type="button" class="btn btn-primary">Delete</button></div>
+<div="container">
+	<div class="wls-copy">
+		<b>Stock Name</b>: {{currentStock.name}}
+		<p>
+		<b>Ticker</b>: {{currentStock.ticker}}
+		<p>
+	</div>
+	<p>
+		<div id="wls-button-panel-secondary">
+		<a ui-sref="edit"><div class="wls-button"><button type="button" class="btn btn-primary">Edit</button></div></a>
+		<div class="wls-button" ng-click="deleteStock(currentStock._id)"><button type="button" class="btn btn-primary">Delete</button></div>
+		</div>
 </div>

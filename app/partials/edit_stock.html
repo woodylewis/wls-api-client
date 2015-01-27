@@ -1,6 +1,9 @@
 <p><br>
 <form name = "stockEdit" novalidate>
-	<label for="name">Name:</label>
-	<input id="name" type="text" name="name" ng-model="stock.name" required>
-	<button type="button" class="btn btn-primary" ng-click="editStock(currentStock._id, stock.name)">Send Edit</button>
+	<!-- NAME -->
+	<label for="name">Name:</label>&nbsp;<input id="name" type="text" name="name" ng-model="stock.name"><br>
+	<!-- TICKER -->
+	<label for="name">Ticker:</label>&nbsp;<input id="ticker" type="text" name="ticker" ng-model="stock.ticker" required><br>
+	<p>
+	<button type="button" class="btn btn-primary" ng-click="editStock(currentStock._id, stock )">Submit</button>
 </form>
