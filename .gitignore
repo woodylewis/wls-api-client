@@ -1,4 +1,5 @@
 logs/*
+app/npm-debug.log
 !.gitkeep
 node_modules/
 bower_components/
