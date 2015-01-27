@@ -45,7 +45,6 @@ angular.module('wlsApp', [
 		})
 }])
 .controller('MainCtrl', function($scope, $window, $state, apiService) {
-	$scope.mainVar = 'HERE';
 
 	//----------------- STOCK LIST ----------------------
     var handleStockListSuccess = function(data, status) {
