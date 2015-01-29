@@ -1,9 +1,10 @@
-<p><br>
+<div class="wls-stock-edit">
 <form name = "stockEdit" novalidate>
 	<!-- NAME -->
-	<label for="name">Name:</label>&nbsp;<input id="name" type="text" name="name" ng-model="stock.name" ng-init="stock.name=currentStock.name"<p>
+	<label for="name">Name:</label>&nbsp;<input id="name" type="text" name="name" ng-model="stock.name" ng-init="stock.name=currentStock.name"><p>
 	<!-- TICKER -->
 	<label for="name">Ticker:</label>&nbsp;<input id="ticker" type="text" name="ticker" ng-model="stock.ticker" ng-init="stock.ticker=currentStock.ticker"><br>
 	<p>
 	<button type="button" class="btn btn-primary" ng-click="editStock(currentStock._id, stock )">Submit</button>
 </form>
+</div>

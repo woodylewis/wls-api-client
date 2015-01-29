@@ -16,6 +16,22 @@ body {
     width:50%;
 }
 
+.wls-stock-copy {
+    margin:0 auto;
+    text-align: left;
+    border:1px solid gray;
+    padding:1em;
+    width:30%;
+}
+
+.wls-stock-edit {
+    margin:0 auto;
+    text-align: center;
+    border:1px solid gray;
+    padding:1em;
+    width:30%;
+}
+
 #wls-button-panel {
     margin:2em;
 }
@@ -32,9 +48,19 @@ body {
     margin:.2em;
 }
 
-.wls-stock-container {
-	margin:1em;
+.wls-stocklist-container {
+    width:50%;
+	margin:0 auto;
 	text-align: center;
+}
+
+.wls-stock-container {
+    position:relative;
+    float:left;
+    width:20%;
+    margin:.2em;
+    text-align: center;
+    border:1px solid gray;
 }
 
 .wls-stock-box {
@@ -42,5 +68,5 @@ body {
     text-align: left;
     border:1px solid gray;
     padding:1em;
-    width:50%;
+    width:20%;
 }
