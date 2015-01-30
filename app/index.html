@@ -68,22 +68,9 @@
       </div>
     </div><!-- container -->
 
-      <div class="wls-copy">
-        This app creates a controller that makes calls to an API server, retrieving data from a MongoDB collection. The controller stores a list of collection items and presents ng-click elements to retrieve, add and delete individual items.
-        <p><br>
-        <a href="https://github.com/woodylewis/wls-api-client" target="_blank">GitHub Repo</a>
-     </div>
-
-      <div id="wls-button-panel">
-        <a ui-sref="index"><button type="button" class="btn btn-primary">Main</button></a>
-        <a ui-sref="list"><button type="button" class="btn btn-primary">Stock List</button></a>
-        <a ui-sref="add"><button type="button" class="btn btn-primary">Add Stock</button></a>  
-      </div>
-
-
-      <div ng-controller="MainCtrl">
-        <div ui-view="state"></div>    
-      </div>
+    <div ng-controller="MainCtrl">
+      <div ui-view="state"></div>    
+    </div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
