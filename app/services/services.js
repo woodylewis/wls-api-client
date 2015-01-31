@@ -63,7 +63,7 @@ angular.module('wlsApp.services', [])
 		console.log('EDIT', stock);
 		var payload = { 
 						name:stock.name, 
-						ticker:stock.ticker
+						ticker:stock.ticker,
 						year1:stock.year1,
 						year2:stock.year2,
 						year3:stock.year3,
