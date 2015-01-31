@@ -3,8 +3,8 @@ angular.module('wlsApp.services', [])
 /* SERVICE TO WRAP HTTP REQUEST */
 
 .factory('apiService' , function($http) {
-	//var stockListUrl = 'http://dev1:5000/api/stocks';
-	var stockListUrl = 'http://mean.wlsllc.com:5000/api/stocks';
+	var stockListUrl = 'http://dev1:5000/api/stocks';
+	//var stockListUrl = 'http://mean.wlsllc.com:5000/api/stocks';
 
 	var fetchStocks = function() {
 		return $http ({
@@ -35,7 +35,12 @@ angular.module('wlsApp.services', [])
 		console.log('INSERT', stock);
 		var payload = { 
 						name:stock.name, 
-						ticker:stock.ticker
+						ticker:stock.ticker,
+						year1:stock.year1,
+						year2:stock.year2,
+						year3:stock.year3,
+						year4:stock.year4,
+						year5:stock.year5
 					};
 
 		return $http ({
@@ -59,6 +64,11 @@ angular.module('wlsApp.services', [])
 		var payload = { 
 						name:stock.name, 
 						ticker:stock.ticker
+						year1:stock.year1,
+						year2:stock.year2,
+						year3:stock.year3,
+						year4:stock.year4,
+						year5:stock.year5
 					};
 
 		return $http ({

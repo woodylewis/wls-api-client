@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "description": "AngularJS app template",
-  "repository": "https://github.com/woodylewis/wls-app",
+  "repository": "https://github.com/woodylewis/wls-api-client",
   "license": "MIT",
   "devDependencies": {
     "karma": "~0.10",
