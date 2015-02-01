@@ -9,6 +9,8 @@ bower install angular-bootstrap
 bower install angular-ui-router
 ```
 ```
+bower install angular-socket-io
+```
 npm install
 ```
 ```
