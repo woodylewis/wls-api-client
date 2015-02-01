@@ -49,18 +49,15 @@ body {
 }
 
 .wls-stocklist-container {
-    width:80%;
-    height:50%;
+    width:50%;
 	margin:0 auto;
 	text-align: center;
 }
 
 .wls-stock-container {
-    display:inline-block;
     position:relative;
     float:left;
     width:20%;
-    height:2em;
     margin:.2em;
     text-align: center;
     border:1px solid gray;
