@@ -2,7 +2,8 @@
 
 // Declare app level module which depends on views, and components
 angular.module('wlsApp', [
-  	'wlsApp.services',
+	'btford.socket-io',
+	'services',
 	'ui.router',
 	'ui.bootstrap',
 	'ui.bootstrap.tpls'
@@ -19,114 +20,18 @@ angular.module('wlsApp', [
 				"state" : { templateUrl: "partials/main_state.html",}
 			}
 		})
-		.state('list', {
-			url: "/list",
-			views: {
-				"state" : { templateUrl: "partials/stocklist.html",}
-			}
-		})
-		.state('stock', {
-			url: "/stock",
-			views: {
-				"state" : { templateUrl: "partials/stock.html", }
-			}
-		})
-		.state('add', {
-			url: "/add",
-			views: {
-				"state" : { templateUrl: "partials/add_stock.html", }
-			}
-		})
-		.state('edit', {
-			url: "/edit",
-			views: {
-				"state" : { templateUrl: "partials/edit_stock.html", }
-			}
-		})
 }])
-.controller('MainCtrl', ['$scope', '$window', '$state', 'apiService', function($scope, $window, $state, apiService) {
-	$scope.currentStock; 
-	$scope.editStockID;
+.factory('mySocket', function (socketFactory) {
+	var myIoSocket = io.connect('http://dev1:3500');
 
-	//----------------- SUBMIT FORM ----------------------
-	$scope.submitInsertForm = function(isValid) {
-		if(isValid) {
-			$scope.insertStock($scope.currentStock);
-		}
-	};
+	var mySocket = socketFactory({
+		ioSocket: myIoSocket
+	});
 
-	//----------------- EDIT FORM ----------------------
-	$scope.submitEditForm = function(isValid) {
-		if(isValid) {
-			$scope.editStock($scope.editStockID, $scope.currentStock);
-		}
-	};
-
-	$scope.copyStock = function(stock) {
-		$scope.currentStock = stock; 
-	};
-
-	$scope.copyEditStock = function(id, stock) {
-		$scope.editStockID = id;
-		$scope.currentStock = stock; 
-	};
-
-	//----------------- STOCK LIST ----------------------
-    var handleStockListSuccess = function(data, status) {
-    $scope.stocks = data;
-    console.log('STOCKS', $scope.stocks);
-  };
-	$scope.stocks  = apiService.fetchStocks()
-          .success(handleStockListSuccess);
-
-    var handleShowStockSuccess = function(data, status) {
-    	$scope.currentStock = data;
-    	var stockPage = 'stock';
-    	$state.go(stockPage);
-  };
-
-	//----------------- SHOW STOCK  ----------------------
-    $scope.showCurrentStock = function(_id) {
-    $scope.currentStock = apiService.fetchCurrentStock(_id)
-    .success(handleShowStockSuccess);
-  	};
-
-  	var handleInsertStockSuccess = function(data, status) {
-  		console.log('STATUS', status);
-  		$scope.stocks = apiService.fetchStocks()
-          .success(handleStockListSuccess);
-    	$state.go('list');
-  	};
-
-	//----------------- ADD STOCK  ----------------------
-  	$scope.insertStock = function(stock) {
-    apiService.insertStock(stock)
-    .success(handleInsertStockSuccess);
-  	}; 
-
-	//----------------- DELETE STOCK  ----------------------
-  	var handleDeleteStockSuccess = function(data, status) {
-  		console.log('STATUS', status);
-  		$scope.stocks = apiService.fetchStocks()
-          .success(handleStockListSuccess);
-    	$state.go('list');
-  	};
-
-  	$scope.deleteStock = function(_id) {
-    	apiService.deleteStock(_id)
-    	  .success(handleDeleteStockSuccess);
-  	};
-
-
-	//----------------- EDIT STOCK  ----------------------
-	var handleEditStockSuccess = function(data, status) {
-  		$scope.stocks = apiService.fetchStocks()
-          .success(handleStockListSuccess);
-    	$state.go('list');
-  	};
-
-	$scope.editStock = function(_id, stock) {
-    	apiService.editStock(_id, stock)
-    	  .success(handleEditStockSuccess);
-  	};
+	return mySocket;
+})
+.controller('MainCtrl', ['$scope', '$state', 'tradeService', 'mySocket',
+			function($scope, $state, tradeService, mySocket) {
+	//$scope.name = "Stock";
+	mySocket.emit('chat message', 'TEST');
 }]); 

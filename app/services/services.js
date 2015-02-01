@@ -1,17 +1,10 @@
-angular.module('wlsApp.services', [])
+angular.module('services', [])
 
 /* SERVICE TO WRAP HTTP REQUEST */
 
-.factory('apiService' , function($http) {
-	//var stockListUrl = 'http://dev1:5000/api/stocks';
-	var stockListUrl = 'http://mean.wlsllc.com:5000/api/stocks';
-
-	var fetchStocks = function() {
-		return $http ({
-			method: 'GET',
-			url: stockListUrl
-		});
-	}
+.factory('tradeService' , function($http) {
+	var stockListUrl = 'http://dev1:5000/api/stocks';
+	//var stockListUrl = 'http://mean.wlsllc.com:5000/api/stocks';
 
 	var fetchCurrentStock = function(_id) {
 		return $http ({
@@ -52,50 +45,13 @@ angular.module('wlsApp.services', [])
 		});
 	}
 
-	var deleteStock = function(_id) {
-		return $http ({
-			method: 'DELETE',
-			url: stockListUrl + '/' + _id
-		});
-	}
-
-	var editStock = function(_id, stock) {
-		console.log('EDIT', stock);
-		var payload = { 
-						name:stock.name, 
-						ticker:stock.ticker,
-						year1:stock.year1,
-						year2:stock.year2,
-						year3:stock.year3,
-						year4:stock.year4,
-						year5:stock.year5
-					};
-
-		return $http ({
-			method: 'PUT',
-			url: stockListUrl + '/' + _id,
-			transformRequest: transformRequestAsFormPost,
-			data: payload,
-			headers: {'Content-Type':'application/x-www-form-urlencoded'}
-		});
-	}
-
 	//--- RETURN THE SERVICE OBJECT WITH METHODS -----
 	return {
-		fetchStocks: function() {
-			return fetchStocks();
-		},
 		fetchCurrentStock: function(_id) {
 			return fetchCurrentStock(_id);
 		},
 		insertStock: function(stock) {
 			return insertStock(stock);
-		},
-		deleteStock: function(_id) {
-			return deleteStock(_id);
-		},
-		editStock: function(_id, stock) {
-			return editStock(_id, stock);
 		}
 	};
 });
