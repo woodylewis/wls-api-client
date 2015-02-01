@@ -46,16 +46,28 @@ angular.module('wlsApp', [
 }])
 .controller('MainCtrl', function($scope, $window, $state, apiService) {
 	$scope.currentStock; 
+	$scope.editStockID;
 
 	//----------------- SUBMIT FORM ----------------------
-	$scope.submitForm = function(isValid) {
-
+	$scope.submitInsertForm = function(isValid) {
 		if(isValid) {
 			$scope.insertStock($scope.currentStock);
 		}
 	};
 
+	//----------------- EDIT FORM ----------------------
+	$scope.submitEditForm = function(isValid) {
+		if(isValid) {
+			$scope.editStock($scope.editStockID, $scope.currentStock);
+		}
+	};
+
 	$scope.copyStock = function(stock) {
+		$scope.currentStock = stock; 
+	};
+
+	$scope.copyEditStock = function(id, stock) {
+		$scope.editStockID = id;
 		$scope.currentStock = stock; 
 	};
 
@@ -108,8 +120,6 @@ angular.module('wlsApp', [
 
 	//----------------- EDIT STOCK  ----------------------
 	var handleEditStockSuccess = function(data, status) {
-  		console.log('STATUS', status);
-  		console.log('DATA', data);
   		$scope.stocks = apiService.fetchStocks()
           .success(handleStockListSuccess);
     	$state.go('list');

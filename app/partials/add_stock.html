@@ -2,8 +2,7 @@
 <div id="wls-button-panel">
 <a ui-sref="list"><button type="button" class="btn btn-primary">Stock List</button></a>
 </div>
-<form name = "stockInsertForm" ng-submit="submitForm(stockInsertForm.$valid)" novalidate>
-	Enter name, ticker and<br> five years' earnings<p>
+<form name = "stockInsertForm" ng-submit="submitInsertForm(stockInsertForm.$valid)" novalidate>
 	<!-- NAME -->
 	<div class="form-group">
 		<label for="name">Name:</label>&nbsp;<input id="name" type="text" name="name" ng-model="stock.name" ng-minlength="3" autofocus required>
