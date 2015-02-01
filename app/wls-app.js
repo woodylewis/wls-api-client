@@ -45,6 +45,19 @@ angular.module('wlsApp', [
 		})
 }])
 .controller('MainCtrl', function($scope, $window, $state, apiService) {
+	$scope.currentStock; 
+
+	//----------------- SUBMIT FORM ----------------------
+	$scope.submitForm = function(isValid) {
+
+		if(isValid) {
+			$scope.insertStock($scope.currentStock);
+		}
+	};
+
+	$scope.copyStock = function(stock) {
+		$scope.currentStock = stock; 
+	};
 
 	//----------------- STOCK LIST ----------------------
     var handleStockListSuccess = function(data, status) {

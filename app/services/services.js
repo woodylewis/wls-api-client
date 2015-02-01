@@ -3,8 +3,8 @@ angular.module('wlsApp.services', [])
 /* SERVICE TO WRAP HTTP REQUEST */
 
 .factory('apiService' , function($http) {
-	//var stockListUrl = 'http://dev1:5000/api/stocks';
-	var stockListUrl = 'http://mean.wlsllc.com:5000/api/stocks';
+	var stockListUrl = 'http://dev1:5000/api/stocks';
+	//var stockListUrl = 'http://mean.wlsllc.com:5000/api/stocks';
 
 	var fetchStocks = function() {
 		return $http ({
