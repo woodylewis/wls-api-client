@@ -44,7 +44,7 @@ angular.module('wlsApp', [
 			}
 		})
 }])
-.controller('MainCtrl', function($scope, $window, $state, apiService) {
+.controller('MainCtrl', ['$scope', '$window', '$state', 'apiService', function($scope, $window, $state, apiService) {
 	$scope.currentStock; 
 	$scope.editStockID;
 
@@ -129,4 +129,4 @@ angular.module('wlsApp', [
     	apiService.editStock(_id, stock)
     	  .success(handleEditStockSuccess);
   	};
-}); 
+}]); 
