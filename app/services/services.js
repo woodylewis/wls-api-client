@@ -1,23 +1,31 @@
 angular.module('wlsApp.services', [])
-
-/* SERVICE TO WRAP HTTP REQUEST */
-
-.factory('apiService' , function($http) {
-	//var stockListUrl = 'http://dev1:5000/api/stocks';
-	var stockListUrl = 'http://mean.wlsllc.com:5000/api/stocks';
+/* SERVICE TO WRAP HTTP REQUESTS */
+.factory('apiService' , ['$q', '$http', function($q, $http) {
+	var stockListUrl = 'http://dev1:5000/api/stocks/';
+	//var stockListUrl = 'http://mean.wlsllc.com:5000/api/stocks';
 
 	var fetchStocks = function() {
-		return $http ({
-			method: 'GET',
-			url: stockListUrl
-		});
+		var deferred = $q.defer();
+		$http.get(stockListUrl)
+		.success(function(data) {
+			deferred.resolve(data);
+		})
+		.error(function(reason) {
+			deferred.reject(reason);
+		})
+		return deferred.promise;		
 	}
 
 	var fetchCurrentStock = function(_id) {
-		return $http ({
-			method: 'GET',
-			url: stockListUrl + '/' + _id
-		});
+		var deferred = $q.defer();
+		$http.get(stockListUrl + _id)
+		.success(function(data) {
+			deferred.resolve(data);
+		})
+		.error(function(reason) {
+			deferred.reject(reason);
+		})
+		return deferred.promise;		
 	}
 
 	//---- TRANSFORMREQUESTASFORMPOST AVOIDS HAVING TO INCLUDE JQUERY FOR SERIALIZATION --
@@ -32,24 +40,31 @@ angular.module('wlsApp.services', [])
 	//-----
 	
 	var insertStock = function(stock) {
-		console.log('INSERT', stock);
 		var payload = { 
-						name:stock.name, 
-						ticker:stock.ticker,
-						year1:stock.year1,
-						year2:stock.year2,
-						year3:stock.year3,
-						year4:stock.year4,
-						year5:stock.year5
-					};
-
-		return $http ({
-			method: 'POST',
-			url: stockListUrl + '/',
-			transformRequest: transformRequestAsFormPost,
-			data: payload,
-			headers: {'Content-Type':'application/x-www-form-urlencoded'}
-		});
+			name:stock.name, 
+			ticker:stock.ticker,
+			year1:stock.year1,
+			year2:stock.year2,
+			year3:stock.year3,
+			year4:stock.year4,
+			year5:stock.year5
+		};
+		var deferred = $q.defer();
+		$http.post(stockListUrl, 
+				{
+				transformRequest: transformRequestAsFormPost,
+				data: payload,
+				headers: {'Content-Type':'application/x-www-form-urlencoded'}
+		})
+		.success(function(data) {
+			console.log('deferred data', data)
+			deferred.resolve(data);
+		})
+		.error(function(reason) {
+			deferred.reject(reason);
+			console.log('post error', reason);
+		})
+		return deferred.promise;
 	}
 
 	var deleteStock = function(_id) {
@@ -98,4 +113,4 @@ angular.module('wlsApp.services', [])
 			return editStock(_id, stock);
 		}
 	};
-});
+}]);

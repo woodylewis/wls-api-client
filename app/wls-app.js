@@ -48,6 +48,51 @@ angular.module('wlsApp', [
 	$scope.currentStock; 
 	$scope.editStockID;
 
+	//----------------- STOCK LIST ----------------------
+  	apiService.fetchStocks()
+  	.then(function(data) {
+  		$scope.stocks = data; 	
+	    console.log('stocks', $scope.stocks);
+  	}), function(error) {
+  		console.log('fetch stocks error', error);
+  	};
+
+	//----------------- SHOW STOCK  ----------------------
+    $scope.showCurrentStock = function(_id) {
+	    apiService.fetchCurrentStock(_id)
+	    .then(function(data) {
+	    	$scope.currentStock = data;
+    		$state.go('stock');
+	    }), function(error) {
+  		console.log('show stock error', error);
+	    };
+  	};
+
+  	  	var handleInsertStockSuccess = function(data, status) {
+  		console.log('STATUS', status);
+  		apiService.fetchStocks()
+          .success(handleStockListSuccess);
+    	$state.go('list');
+  	};
+
+	//----------------- ADD STOCK  ----------------------
+  	$scope.insertStock = function(stock) {
+    	apiService.insertStock(stock)
+    	.then(function(data) {
+    		apiService.fetchStocks()
+    		.then(function(data) {
+  				$scope.stocks = data; 	
+	    		console.log('stocks after insert', $scope.stocks);
+  			}), function(error) {
+  				console.log('fetch stocks error', error);
+  			};
+    		$state.go('list');
+    	}), function(error) {
+  			console.log('insert stock error', error);
+    	};
+    //.success(handleInsertStockSuccess);
+  	}; 
+
 	//----------------- SUBMIT FORM ----------------------
 	$scope.submitInsertForm = function(isValid) {
 		if(isValid) {
@@ -70,39 +115,6 @@ angular.module('wlsApp', [
 		$scope.editStockID = id;
 		$scope.currentStock = stock; 
 	};
-
-	//----------------- STOCK LIST ----------------------
-    var handleStockListSuccess = function(data, status) {
-    $scope.stocks = data;
-    console.log('STOCKS', $scope.stocks);
-  };
-	$scope.stocks  = apiService.fetchStocks()
-          .success(handleStockListSuccess);
-
-    var handleShowStockSuccess = function(data, status) {
-    	$scope.currentStock = data;
-    	var stockPage = 'stock';
-    	$state.go(stockPage);
-  };
-
-	//----------------- SHOW STOCK  ----------------------
-    $scope.showCurrentStock = function(_id) {
-    $scope.currentStock = apiService.fetchCurrentStock(_id)
-    .success(handleShowStockSuccess);
-  	};
-
-  	var handleInsertStockSuccess = function(data, status) {
-  		console.log('STATUS', status);
-  		$scope.stocks = apiService.fetchStocks()
-          .success(handleStockListSuccess);
-    	$state.go('list');
-  	};
-
-	//----------------- ADD STOCK  ----------------------
-  	$scope.insertStock = function(stock) {
-    apiService.insertStock(stock)
-    .success(handleInsertStockSuccess);
-  	}; 
 
 	//----------------- DELETE STOCK  ----------------------
   	var handleDeleteStockSuccess = function(data, status) {
