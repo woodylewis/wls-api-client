@@ -1,8 +1,10 @@
+'use strict';
+
 angular.module('wlsApp.services', [])
 /* SERVICE TO WRAP HTTP REQUESTS */
 .factory('apiService' , ['$q', '$http', function($q, $http) {
-	var stockListUrl = 'http://dev1:5000/api/stocks/';
-	//var stockListUrl = 'http://mean.wlsllc.com:5000/api/stocks';
+	//var stockListUrl = 'http://dev1:5000/api/stocks/';
+	var stockListUrl = 'http://mean.wlsllc.com:5000/api/stocks/';
 
 	var fetchStocks = function() {
 		var deferred = $q.defer();
@@ -51,13 +53,12 @@ angular.module('wlsApp.services', [])
 		};
 		var deferred = $q.defer();
 		$http.post(stockListUrl, 
-				{
+			{
 				transformRequest: transformRequestAsFormPost,
 				data: payload,
 				headers: {'Content-Type':'application/x-www-form-urlencoded'}
 		})
 		.success(function(data) {
-			console.log('deferred data', data)
 			deferred.resolve(data);
 		})
 		.error(function(reason) {
@@ -68,31 +69,43 @@ angular.module('wlsApp.services', [])
 	}
 
 	var deleteStock = function(_id) {
-		return $http ({
-			method: 'DELETE',
-			url: stockListUrl + '/' + _id
-		});
+		var deferred = $q.defer();
+		$http.delete(stockListUrl + _id)
+		.success(function(data) {
+			deferred.resolve(data);
+		})
+		.error(function(reason) {
+			deferred.reject(reason);
+			console.log('delete error', reason);
+		})
+		return deferred.promise;		
 	}
 
 	var editStock = function(_id, stock) {
-		console.log('EDIT', stock);
 		var payload = { 
-						name:stock.name, 
-						ticker:stock.ticker,
-						year1:stock.year1,
-						year2:stock.year2,
-						year3:stock.year3,
-						year4:stock.year4,
-						year5:stock.year5
-					};
-
-		return $http ({
-			method: 'PUT',
-			url: stockListUrl + '/' + _id,
-			transformRequest: transformRequestAsFormPost,
-			data: payload,
-			headers: {'Content-Type':'application/x-www-form-urlencoded'}
-		});
+			name:stock.name, 
+			ticker:stock.ticker,
+			year1:stock.year1,
+			year2:stock.year2,
+			year3:stock.year3,
+			year4:stock.year4,
+			year5:stock.year5
+		};
+		var deferred = $q.defer();
+		$http.put(stockListUrl + _id,
+			{
+				transformRequest: transformRequestAsFormPost,
+				data: payload,
+				headers: {'Content-Type':'application/x-www-form-urlencoded'}
+		})
+		.success(function(data) {
+			deferred.resolve(data);
+		})
+		.error(function(reason) {
+			deferred.reject(reason);
+			console.log('post error', reason);
+		})
+		return deferred.promise;
 	}
 
 	//--- RETURN THE SERVICE OBJECT WITH METHODS -----

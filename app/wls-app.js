@@ -1,6 +1,5 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
 angular.module('wlsApp', [
   	'wlsApp.services',
 	'ui.router',
@@ -68,13 +67,6 @@ angular.module('wlsApp', [
 	    };
   	};
 
-  	  	var handleInsertStockSuccess = function(data, status) {
-  		console.log('STATUS', status);
-  		apiService.fetchStocks()
-          .success(handleStockListSuccess);
-    	$state.go('list');
-  	};
-
 	//----------------- ADD STOCK  ----------------------
   	$scope.insertStock = function(stock) {
     	apiService.insertStock(stock)
@@ -82,7 +74,6 @@ angular.module('wlsApp', [
     		apiService.fetchStocks()
     		.then(function(data) {
   				$scope.stocks = data; 	
-	    		console.log('stocks after insert', $scope.stocks);
   			}), function(error) {
   				console.log('fetch stocks error', error);
   			};
@@ -90,8 +81,46 @@ angular.module('wlsApp', [
     	}), function(error) {
   			console.log('insert stock error', error);
     	};
-    //.success(handleInsertStockSuccess);
-  	}; 
+    };
+
+
+	//----------------- DELETE STOCK  ----------------------
+  	var handleDeleteStockSuccess = function(data, status) {
+  		console.log('STATUS', status);
+  		$scope.stocks = apiService.fetchStocks()
+          .success(handleStockListSuccess);
+    	$state.go('list');
+  	};
+
+  	$scope.deleteStock = function(_id) {
+    	apiService.deleteStock(_id)
+    	.then(function(data) {
+    		apiService.fetchStocks()
+    		.then(function(data) {
+  				$scope.stocks = data; 	
+  			}), function(error) {
+  				console.log('fetch stocks error', error);
+  			};
+    		$state.go('list');
+    	}), function(error) {
+  			console.log('delete stock error', error);
+    	};
+  	};
+    //----------------- EDIT STOCK  ----------------------
+	$scope.editStock = function(_id, stock) {
+    	apiService.editStock(_id, stock)
+    	.then(function(data) {
+    		apiService.fetchStocks()
+    		.then(function(data) {
+  				$scope.stocks = data; 	
+  			}), function(error) {
+  				console.log('fetch stocks error', error);
+  			};
+    		$state.go('list');
+    	}), function(error) {
+  			console.log('edit stock error', error);
+    	};
+  	};
 
 	//----------------- SUBMIT FORM ----------------------
 	$scope.submitInsertForm = function(isValid) {
@@ -116,29 +145,4 @@ angular.module('wlsApp', [
 		$scope.currentStock = stock; 
 	};
 
-	//----------------- DELETE STOCK  ----------------------
-  	var handleDeleteStockSuccess = function(data, status) {
-  		console.log('STATUS', status);
-  		$scope.stocks = apiService.fetchStocks()
-          .success(handleStockListSuccess);
-    	$state.go('list');
-  	};
-
-  	$scope.deleteStock = function(_id) {
-    	apiService.deleteStock(_id)
-    	  .success(handleDeleteStockSuccess);
-  	};
-
-
-	//----------------- EDIT STOCK  ----------------------
-	var handleEditStockSuccess = function(data, status) {
-  		$scope.stocks = apiService.fetchStocks()
-          .success(handleStockListSuccess);
-    	$state.go('list');
-  	};
-
-	$scope.editStock = function(_id, stock) {
-    	apiService.editStock(_id, stock)
-    	  .success(handleEditStockSuccess);
-  	};
 }]); 
