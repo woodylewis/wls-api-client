@@ -85,13 +85,6 @@ angular.module('wlsApp', [
 
 
 	//----------------- DELETE STOCK  ----------------------
-  	var handleDeleteStockSuccess = function(data, status) {
-  		console.log('STATUS', status);
-  		$scope.stocks = apiService.fetchStocks()
-          .success(handleStockListSuccess);
-    	$state.go('list');
-  	};
-
   	$scope.deleteStock = function(_id) {
     	apiService.deleteStock(_id)
     	.then(function(data) {
