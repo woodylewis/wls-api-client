@@ -78,7 +78,28 @@ body {
 .wls-stock-bar {
     text-align: center;
     position: relative;
-    padding:2em;
-    margin:2em;
+    /*padding:1em;*/
+    margin:1em;
     border:1px solid gray;
+}
+
+.axis path, .axis line
+{
+    fill: grey;
+    stroke: #777;
+    shape-rendering: crispEdges;
+}
+        
+.axis text
+{
+    font-family: 'Arial';
+    font-size: 12px;
+}
+.tick
+{
+    stroke-dasharray: 1, 2;
+}
+.bar
+{
+    fill: teal;
 }

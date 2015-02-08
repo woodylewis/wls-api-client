@@ -55,75 +55,86 @@ angular.module('wlsApp', [
 			d3Service.d3().then(function(d3) {
 				//-- WE ALSO WANT ACCESS TO PARENT VARIABLES HERE ---
 				var theStock = $scope.$parent.currentStock;
-				var dataset = [
-						theStock.year1, 
-						theStock.year2, 
-						theStock.year3, 
-						theStock.year4, 
-						theStock.year5 
-					];	
+				var barData = [{
+					'x'	: 1,
+					'y' : theStock.year1
+					},{
+					'x' : 2,
+					'y'	: theStock.year2
+					}, {
+					'x' : 3,
+					'y' : theStock.year3
+					}, {
+					'x' : 4,
+					'y' : theStock.year4
+					}, {
+					'x' : 5,
+					'y' : theStock.year5 
+					}];	
 				
-console.log('dataset', dataset);
-				var w = 300;
-				var h = 100;
-				var barPadding = 4;
+				var chart = d3.select(".wls-stock-bar"),
+					WIDTH = 500,
+					HEIGHT = 150,
+					MARGINS = {
+						top:20,
+						right:10,
+						bottom:20,
+						left:50
+					},
+				xRange = d3.scale.ordinal()
+						.rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right],
+					0.1).domain(barData.map(function(d) {
+						return d.x;
+					})),
 
-				var svg = d3.select(".wls-stock-bar")
-							.append("svg")
-							.attr("width", w)
-							.attr("height", h);
+				yRange = d3.scale.linear()
+				   	   //.range([HEIGHT - MARGINS.top, MARGINS.bottom])
+				   	   .range([HEIGHT - MARGINS.bottom, MARGINS.top])
+				   	   .domain([0, d3.max(barData, function(d) {
+				   	   		return d.y;
+				   	   })
+				   	  ]),
 
-				var y = d3.scale.linear()
-				   	   .domain([0, d3.max(dataset)])
-				   	   .range([0, h]);
+				xAxis = d3.svg.axis()
+						.scale(xRange)
+						.tickSize(5)
+						.tickSubdivide(true),
+
+				yAxis = d3.svg.axis()
+						.scale(yRange)
+						.tickSize(5)
+						.orient("left")
+						.tickSubdivide(true);
+
+				chart.append('svg:g')
+					.attr('class', 'x axis')
+					.attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+					.call(xAxis);
+				
+				chart.append('svg:g')
+					.attr('class', 'y axis')
+					.attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+					.call(yAxis);
 				   
-				svg.selectAll("rect")
-				   .data(dataset)
+				chart.selectAll('rect')
+				   .data(barData)
 				   .enter()
-				   .append("rect")
-
-
-				   .attr("x", function(d, i) {
-				   		return i * (w / dataset.length);
+				   .append('rect')
+				   .attr('x', function(d){
+				   		return xRange(d.x);
 				   })
-				   .attr("y", function(d) {
-				   		return y - (d * 4);
-				   		//return h - (d * 4);
+				   .attr('y', function(d){
+				   		return yRange(d.y);
 				   })
-
-
-				   .attr("width", (w / dataset.length - barPadding)/2)
-				   .attr("height", y)
-				   /*
-				   .attr("height", function(d) {
-				   		return d * 4;
+				   .attr('width', xRange.rangeBand())
+				   .attr('height', function (d){
+				   		return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
 				   })
-			*/
-
-
 
 				   .attr("fill", function(d) {
-						return "rgb(0, 0, 0";
+						return "#70B8FF";
+						//return "rgb(0, 0, 200";
 				   });
-/*
-				svg.selectAll("text")
-				   .data(dataset)
-				   .enter()
-				   .append("text")
-				   .text(function(d) {
-				   		return d;
-				   })
-				   .attr("text-anchor", "middle")
-				   .attr("x", function(d, i) {
-				   		return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2;
-				   })
-				   .attr("y", function(d) {
-				   		return h - (d * 4) + 14;
-				   })
-				   .attr("font-family", "sans-serif")
-				   .attr("font-size", "11px")
-				   .attr("fill", "white");
-*/
 			});
 		}
 	};
