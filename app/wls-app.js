@@ -64,7 +64,7 @@ angular.module('wlsApp', [
 					];	
 				
 console.log('dataset', dataset);
-				var w = 100;
+				var w = 300;
 				var h = 100;
 				var barPadding = 4;
 
@@ -73,24 +73,39 @@ console.log('dataset', dataset);
 							.attr("width", w)
 							.attr("height", h);
 
+				var y = d3.scale.linear()
+				   	   .domain([0, d3.max(dataset)])
+				   	   .range([0, h]);
+				   
 				svg.selectAll("rect")
 				   .data(dataset)
 				   .enter()
 				   .append("rect")
+
+
 				   .attr("x", function(d, i) {
 				   		return i * (w / dataset.length);
 				   })
 				   .attr("y", function(d) {
-				   		return h - (d * 4);
+				   		return y - (d * 4);
+				   		//return h - (d * 4);
 				   })
-				   .attr("width", w / dataset.length - barPadding)
+
+
+				   .attr("width", (w / dataset.length - barPadding)/2)
+				   .attr("height", y)
+				   /*
 				   .attr("height", function(d) {
 				   		return d * 4;
 				   })
+			*/
+
+
+
 				   .attr("fill", function(d) {
 						return "rgb(0, 0, 0";
 				   });
-
+/*
 				svg.selectAll("text")
 				   .data(dataset)
 				   .enter()
@@ -108,7 +123,7 @@ console.log('dataset', dataset);
 				   .attr("font-family", "sans-serif")
 				   .attr("font-size", "11px")
 				   .attr("fill", "white");
-
+*/
 			});
 		}
 	};
