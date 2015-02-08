@@ -71,5 +71,14 @@ body {
     text-align: left;
     border:1px solid gray;
     padding:1em;
-    width:20%;
+    width:20em;
+    height:20em;
+}
+
+.wls-stock-bar {
+    text-align: center;
+    position: relative;
+    padding:2em;
+    margin:2em;
+    border:1px solid gray;
 }

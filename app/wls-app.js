@@ -4,7 +4,8 @@ angular.module('wlsApp', [
   	'wlsApp.services',
 	'ui.router',
 	'ui.bootstrap',
-	'ui.bootstrap.tpls'
+	'ui.bootstrap.tpls',
+	'd3'
 ])
 .config(['$stateProvider', '$urlRouterProvider', 
 		  	function($stateProvider, $urlRouterProvider) {
@@ -42,6 +43,75 @@ angular.module('wlsApp', [
 				"state" : { templateUrl: "partials/edit_stock.html", }
 			}
 		})
+}])
+.directive('wlsBarchart2', [ 'd3Service', function (d3Service) {
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/wls-barchart2.html',
+		//--- WE WANT THE TEMPLATE TO BIND PARENT CONTEXT --- 
+		transclude: true,
+
+		link: function($scope) {
+			d3Service.d3().then(function(d3) {
+				//-- WE ALSO WANT ACCESS TO PARENT VARIABLES HERE ---
+				var theStock = $scope.$parent.currentStock;
+				var dataset = [
+						theStock.year1, 
+						theStock.year2, 
+						theStock.year3, 
+						theStock.year4, 
+						theStock.year5 
+					];	
+				
+console.log('dataset', dataset);
+				var w = 100;
+				var h = 100;
+				var barPadding = 4;
+
+				var svg = d3.select(".wls-stock-bar")
+							.append("svg")
+							.attr("width", w)
+							.attr("height", h);
+
+				svg.selectAll("rect")
+				   .data(dataset)
+				   .enter()
+				   .append("rect")
+				   .attr("x", function(d, i) {
+				   		return i * (w / dataset.length);
+				   })
+				   .attr("y", function(d) {
+				   		return h - (d * 4);
+				   })
+				   .attr("width", w / dataset.length - barPadding)
+				   .attr("height", function(d) {
+				   		return d * 4;
+				   })
+				   .attr("fill", function(d) {
+						return "rgb(0, 0, 0";
+				   });
+
+				svg.selectAll("text")
+				   .data(dataset)
+				   .enter()
+				   .append("text")
+				   .text(function(d) {
+				   		return d;
+				   })
+				   .attr("text-anchor", "middle")
+				   .attr("x", function(d, i) {
+				   		return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2;
+				   })
+				   .attr("y", function(d) {
+				   		return h - (d * 4) + 14;
+				   })
+				   .attr("font-family", "sans-serif")
+				   .attr("font-size", "11px")
+				   .attr("fill", "white");
+
+			});
+		}
+	};
 }])
 .controller('MainCtrl', ['$scope', '$window', '$state', 'apiService', function($scope, $window, $state, apiService) {
 	$scope.currentStock; 
@@ -137,5 +207,4 @@ angular.module('wlsApp', [
 		$scope.editStockID = id;
 		$scope.currentStock = stock; 
 	};
-
 }]); 
