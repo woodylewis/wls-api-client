@@ -199,6 +199,14 @@ angular.module('wlsApp', [
 	$scope.editStock = function(_id, stock) {
     	apiService.editStock(_id, stock)
     	.then(function(data) {
+    		 apiService.fetchCurrentStock(_id)
+		    .then(function(data) {
+		    	$scope.currentStock = data;
+		    }), function(error) {
+	  		console.log('show stock error', error);
+		    };
+    		$state.go('stock');
+    		/*
     		apiService.fetchStocks()
     		.then(function(data) {
   				$scope.stocks = data; 	
@@ -206,6 +214,7 @@ angular.module('wlsApp', [
   				console.log('fetch stocks error', error);
   			};
     		$state.go('list');
+    		*/
     	}), function(error) {
   			console.log('edit stock error', error);
     	};
