@@ -206,15 +206,6 @@ angular.module('wlsApp', [
 	  		console.log('show stock error', error);
 		    };
     		$state.go('stock');
-    		/*
-    		apiService.fetchStocks()
-    		.then(function(data) {
-  				$scope.stocks = data; 	
-  			}), function(error) {
-  				console.log('fetch stocks error', error);
-  			};
-    		$state.go('list');
-    		*/
     	}), function(error) {
   			console.log('edit stock error', error);
     	};
