@@ -144,12 +144,15 @@ angular.module('wlsApp', [
 	$scope.editStockID;
 
 	//----------------- STOCK LIST ----------------------
-  	apiService.fetchStocks()
-  	.then(function(data) {
-  		$scope.stocks = data; 	
-	    console.log('stocks', $scope.stocks);
-  	}), function(error) {
-  		console.log('fetch stocks error', error);
+	$scope.getStocks = function() {
+console.log('GET STOCKS');
+	  	apiService.fetchStocks()
+	  	.then(function(data) {
+	  		$scope.stocks = data; 	
+		    console.log('stocks', $scope.stocks);
+	  	}), function(error) {
+	  		console.log('fetch stocks error', error);
+	  	};
   	};
 
 	//----------------- SHOW STOCK  ----------------------
@@ -182,11 +185,13 @@ angular.module('wlsApp', [
 
 	//----------------- DELETE STOCK  ----------------------
   	$scope.deleteStock = function(_id) {
+console.log('START DELETE');
     	apiService.deleteStock(_id)
     	.then(function(data) {
     		apiService.fetchStocks()
     		.then(function(data) {
-  				$scope.stocks = data; 	
+  				$scope.stocks = data; 
+console.log('AFTER DELETE AND FETCH ', $scope.stocks);	
   			}), function(error) {
   				console.log('fetch stocks error', error);
   			};
@@ -233,4 +238,7 @@ angular.module('wlsApp', [
 		$scope.editStockID = id;
 		$scope.currentStock = stock; 
 	};
+
+	
+	$scope.getStocks();
 }]); 
